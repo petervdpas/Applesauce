@@ -1,6 +1,6 @@
 # Applesauce
 
-### Some asynchronous JavaScript to sweeten up you chicken...
+### Some asynchronous JavaScript to sweeten up your chicken...
 
 <img src="http://makernode.net/uploads/543d3362210757.32074860/applesauce.png" width="200px" />
 
