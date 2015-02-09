@@ -15,7 +15,10 @@
 		
 		function launch() {
 			widget.jQuery.ajaxSetup({cache: true});
+			widget.injectCss("~/simple.css");
+			
 			widget.log("Rocket launcher!");
+			
 			callback();
 		}
 		
@@ -31,13 +34,23 @@
  		    return;
  		}
 		
-		$onefield.each(function(){
-			$(this).find('li').each(function(){
-		           widget.log($(this).html());
-			});
+		// jQuery's .on() function is for jQuery >= 1.7
+		$onefield.on( "click", "li", function() {
+			widget.log( $(this).html() );
+			colorMe($(this));
 		});
 		
     });
 	
+	colorMe = function(elem){
+		
+		var className = elem.html().toLowerCase();
+		
+		if ( elem.hasClass(className) ) {
+			elem.removeClass(className);
+		} else {
+			elem.addClass(className);
+		}
+	};
 	
 })();
