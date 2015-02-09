@@ -11,7 +11,7 @@
 		
 		widget.loadJQuery(
 			launch,
-			"http://hkl.nl/js/jquery/" + widget.jqVersion + "/jquery.min.js");
+			"https://ajax.googleapis.com/ajax/libs/jquery/" + widget.jqVersion + "/jquery.min.js");
 		
 		function launch() {
 			widget.jQuery.ajaxSetup({cache: true});
@@ -26,6 +26,8 @@
 
 	start(function () {
 		
+		var $$ = widget.jQuery;
+		
 		widget.log( widget.widgetReference + ": " + widget.jQuery.fn.jquery);
 		
 		$onefield = widget.getElement("oneselector");
@@ -36,8 +38,11 @@
 		
 		// jQuery's .on() function is for jQuery >= 1.7
 		$onefield.on( "click", "li", function() {
-			widget.log( $(this).html() );
-			colorMe($(this));
+			//widget.log( widget.jQuery(this).html() );
+			//colorMe( widget.jQuery(this) );
+			
+			widget.log( $$(this).html() );
+			colorMe( $$(this) );
 		});
 		
     });

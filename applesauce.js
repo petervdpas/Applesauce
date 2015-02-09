@@ -1,13 +1,13 @@
 function Applesauce( widgetReference ) {
 
 	this.jqVersion = null;
-	this.jQuery = null; // Eigen jQuery referentie
+	this.jQuery = null; // The widget's own jQuery reference
 	
 	this.widgetReference = widgetReference;
 	this.widget = null;
 	this.path = null;
 	
-	if ( this.jQuery === null ) {
+	if ( this.jQuery === null && ( window.jQuery !== undefined ) ) {
 		this.jQuery = this.setJqueryByVersion(
 			window.jQuery.fn.jquery,
 			window.jQuery
@@ -32,7 +32,7 @@ Applesauce.prototype.init = function () {
 };
 
 Applesauce.prototype.setVersion = function (jqMin, jqMax) {
-	if (window.attachEvent && !window.addEventListener) {
+	if ( window.attachEvent && !window.addEventListener ) {
 		this.jqVersion = jqMin;
 	} else {
 		this.jqVersion = jqMax;
@@ -202,6 +202,8 @@ Applesauce.prototype.getElement = function (elementName) {
 		_this.log(window.appelmoes_jquery_objects[i].version);
 	}
 	*/
+	
+	//Do I have jQuery ????
 	
     var elem = _this.widget.data(elementName);
 

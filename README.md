@@ -16,4 +16,4 @@ With the Applesauce script it is possible to run multiple widgets (using applesa
 
 ### Who created this...?
 
-The Applesauce script was brought to you by Peter van de Pas and Richard Moeskops.
+The Applesauce script was brought to you by [Peter van de Pas](https://github.com/petervdpas) and [Richard Moeskops](https://github.com/thargol1).
