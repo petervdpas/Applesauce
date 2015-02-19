@@ -48,7 +48,7 @@ Applesauce.prototype.injectScriptTag = function (src) {
 		document.getElementsByTagName("head")[0].appendChild(script);
 	}
 	
-	//this.log(window.appelmoes_injected_urls);
+	//this.log(window.applesauce_injected_urls);
 };
 
 Applesauce.prototype.injectCss = function (url) {
@@ -78,17 +78,17 @@ Applesauce.prototype.resolveUrl = function (url) {
 /* Might rename to checkInjectedSource */
 Applesauce.prototype.checkInjectedUrls = function (url) {
 	
-	if (typeof appelmoes_injected_urls === 'undefined') {
-		window.appelmoes_injected_urls = [];
+	if (typeof applesauce_injected_urls === 'undefined') {
+		window.applesauce_injected_urls = [];
 	}
 
-	for (var i = 0; i < window.appelmoes_injected_urls.length; i++ ) {
-		if ( window.appelmoes_injected_urls[i] === url ) {
+	for (var i = 0; i < window.applesauce_injected_urls.length; i++ ) {
+		if ( window.applesauce_injected_urls[i] === url ) {
 			return true;
 		} 
 	}
 	
-	window.appelmoes_injected_urls.push(url);
+	window.applesauce_injected_urls.push(url);
 	
 	return false;
 };
@@ -99,7 +99,7 @@ Applesauce.prototype.setJqueryByVersion = function (version, jqObject) {
 	
 	if ( jqr === null ) {
 		
-		window.appelmoes_jquery_objects.push({
+		window.applesauce_jquery_objects.push({
 			version: version,
 			jquery: jqObject
 		});
@@ -114,13 +114,13 @@ Applesauce.prototype.setJqueryByVersion = function (version, jqObject) {
 
 Applesauce.prototype.getJqueryByVersion = function (version) {
 	
-	if (typeof appelmoes_jquery_objects === 'undefined') {
-		window.appelmoes_jquery_objects = [];
+	if (typeof applesauce_jquery_objects === 'undefined') {
+		window.applesauce_jquery_objects = [];
 	}
 	
-	for (var i = 0; i < window.appelmoes_jquery_objects.length; i++ ) {
-		if ( window.appelmoes_jquery_objects[i].version === version ) {
-			return window.appelmoes_jquery_objects[i].jquery;
+	for (var i = 0; i < window.applesauce_jquery_objects.length; i++ ) {
+		if ( window.applesauce_jquery_objects[i].version === version ) {
+			return window.applesauce_jquery_objects[i].jquery;
 		} 
 	}
 	
@@ -139,7 +139,7 @@ Applesauce.prototype.loadJQuery = function (callback, jqUrl) {
 		// Required version of jQuery is not loaded
 		if ( !(window.jQuery && window.jQuery.fn.jquery === _this.jqVersion) ) {
 			
-			//Only if not yet in global array: appelmoes_injected_urls!! 
+			//Only if not yet in global array: applesauce_injected_urls!! 
 			_this.injectScriptTag(jqUrl); 
 
 			// Wait until jQuery exists
@@ -198,8 +198,8 @@ Applesauce.prototype.getElement = function (elementName) {
     _this.init();
 
 	/*
-	for (var i = 0; i < window.appelmoes_jquery_objects.length; i++ ) {
-		_this.log(window.appelmoes_jquery_objects[i].version);
+	for (var i = 0; i < window.applesauce_jquery_objects.length; i++ ) {
+		_this.log(window.applesauce_jquery_objects[i].version);
 	}
 	*/
 	
