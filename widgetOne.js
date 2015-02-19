@@ -35,7 +35,7 @@
 			
 			this.use('Template');
 			
-			this.element_selector = 'body';
+			this.element_selector = '#applesauce';
 			
 			this.get('#/', function(context) {
 				
@@ -54,6 +54,10 @@
 					
 				});
 				
+			});
+			
+			this.get('#/test', function() {
+				$$('#applesauce').text('Hello World');
 			});
 			
 		}).run('#/');
