@@ -15,12 +15,12 @@ It is especially nice if you combine it with tools like the Google Tag Manager (
 An Applesauce widget could look a little like the block of code below.
 
 <code>
-&lt;!-- An Applesauce widget. See: widgetOne.js for JavaScript --&gt;<br />
-&lt;script src="applesauce.js"&gt;&lt;/script&gt;<br />
-&lt;script src="widgetOne.js"&gt;&lt;/script&gt;<br />
-&lt;div id="widgetOne" style="display:none"<br />
-&nbsp;&nbsp;&nbsp;&nbsp;data-oneselector="#some_identifier"<br />
-&nbsp;&nbsp;&nbsp;&nbsp;data-src="."&gt;<br />
+&lt;!-- An Applesauce widget. See: widgetOne.js for JavaScript --&gt;<br>
+&lt;script src="applesauce.js"&gt;&lt;/script&gt;<br>
+&lt;script src="widgetOne.js"&gt;&lt;/script&gt;<br>
+&lt;div id="widgetOne" style="display:none"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;data-oneselector="#some_identifier"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;data-src="."&gt;<br>
 &lt;/div&gt;
 </code>
 

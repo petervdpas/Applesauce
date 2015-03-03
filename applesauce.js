@@ -16,7 +16,9 @@ function Applesauce( widgetReference ) {
 }
 
 Applesauce.prototype.log = function (msg) {
-	if (typeof console !== 'undefined' && typeof console.log !== 'undefined') {
+	if ( window.console && 
+			(typeof console !== 'undefined') && 
+				(typeof console.log !== 'undefined') ) {
 		console.log("Applesauce: " + msg);
 	}
 }
@@ -39,12 +41,12 @@ Applesauce.prototype.setVersion = function (jqMin, jqMax) {
 	}
 }
 
-Applesauce.prototype.injectScriptTag = function (src) {
+Applesauce.prototype.injectScriptTag = function (url) {
 	
-	if ( !this.checkInjectedUrls(src) ) {
-		var script = document.createElement("SCRIPT");
+	if ( !this.checkInjectedUrls(url) ) {
+		var script = document.createElement("script");
 		script.type = 'text/javascript';
-		script.src = src;
+		script.src = url;
 		document.getElementsByTagName("head")[0].appendChild(script);
 	}
 	
@@ -72,7 +74,10 @@ Applesauce.prototype.resolveUrl = function (url) {
 	var _this = this;
 	
 	_this.init();
-	return url && url.length >= 2 && url.substr(0, 1) == "~" ? url = _this.path + url.substr(1) : url;
+	
+	return url && 
+		url.length >= 2 && 
+		url.substr(0, 1) == "~" ? url = _this.path + url.substr(1) : url;
 };
 
 /* Might rename to checkInjectedSource */
