@@ -7,7 +7,9 @@ function Applesauce( widgetReference ) {
 	this.widget = null;
 	this.path = null;
 	
-	if ( this.jQuery === null && ( window.jQuery !== undefined ) ) {
+	if ( this.jQuery === null && 
+			( window.jQuery !== undefined ) ) {
+				
 		this.jQuery = this.setJqueryByVersion(
 			window.jQuery.fn.jquery,
 			window.jQuery
@@ -16,9 +18,10 @@ function Applesauce( widgetReference ) {
 }
 
 Applesauce.prototype.log = function (msg) {
-	if ( window.console && 
+	if ( console && 
 			(typeof console !== 'undefined') && 
-				(typeof console.log !== 'undefined') ) {
+			(typeof console.log !== 'undefined') ) {
+				
 		console.log("Applesauce: " + msg);
 	}
 }
@@ -34,10 +37,13 @@ Applesauce.prototype.init = function () {
 };
 
 Applesauce.prototype.setVersion = function (jqMin, jqMax) {
-	if ( window.attachEvent && !window.addEventListener ) {
-		this.jqVersion = jqMin;
+	
+	var _this = this;
+	
+	if ( document.attachEvent && !document.addEventListener ) {
+		_this.jqVersion = jqMin;
 	} else {
-		this.jqVersion = jqMax;
+		_this.jqVersion = jqMax;
 	}
 }
 
@@ -76,24 +82,24 @@ Applesauce.prototype.resolveUrl = function (url) {
 	_this.init();
 	
 	return url && 
-		url.length >= 2 && 
-		url.substr(0, 1) == "~" ? url = _this.path + url.substr(1) : url;
+		(url.length >= 2) && 
+		(url.substr(0, 1) == "~") ? url = _this.path + url.substr(1) : url;
 };
 
 /* Might rename to checkInjectedSource */
 Applesauce.prototype.checkInjectedUrls = function (url) {
 	
 	if (typeof applesauce_injected_urls === 'undefined') {
-		window.applesauce_injected_urls = [];
+		document.applesauce_injected_urls = [];
 	}
 
-	for (var i = 0; i < window.applesauce_injected_urls.length; i++ ) {
-		if ( window.applesauce_injected_urls[i] === url ) {
+	for (var i = 0; i < document.applesauce_injected_urls.length; i++ ) {
+		if ( document.applesauce_injected_urls[i] === url ) {
 			return true;
 		} 
 	}
 	
-	window.applesauce_injected_urls.push(url);
+	document.applesauce_injected_urls.push(url);
 	
 	return false;
 };
@@ -104,7 +110,7 @@ Applesauce.prototype.setJqueryByVersion = function (version, jqObject) {
 	
 	if ( jqr === null ) {
 		
-		window.applesauce_jquery_objects.push({
+		document.applesauce_jquery_objects.push({
 			version: version,
 			jquery: jqObject
 		});
@@ -120,12 +126,12 @@ Applesauce.prototype.setJqueryByVersion = function (version, jqObject) {
 Applesauce.prototype.getJqueryByVersion = function (version) {
 	
 	if (typeof applesauce_jquery_objects === 'undefined') {
-		window.applesauce_jquery_objects = [];
+		document.applesauce_jquery_objects = [];
 	}
 	
-	for (var i = 0; i < window.applesauce_jquery_objects.length; i++ ) {
-		if ( window.applesauce_jquery_objects[i].version === version ) {
-			return window.applesauce_jquery_objects[i].jquery;
+	for (var i = 0; i < document.applesauce_jquery_objects.length; i++ ) {
+		if ( document.applesauce_jquery_objects[i].version === version ) {
+			return document.applesauce_jquery_objects[i].jquery;
 		} 
 	}
 	
@@ -137,12 +143,13 @@ Applesauce.prototype.loadJQuery = function (callback, jqUrl) {
 	var _this = this;
 	
 	if (_this.jQuery && _this.jQuery.fn.jquery === _this.jqVersion) {
-		_this.jQuery(callback(_this.jQuery));
+		//_this.jQuery(callback(_this.jQuery));
+		callback();
 	}
 	else {
 		
 		// Required version of jQuery is not loaded
-		if ( !(window.jQuery && window.jQuery.fn.jquery === _this.jqVersion) ) {
+		if ( !(window.jQuery && (window.jQuery.fn.jquery === _this.jqVersion)) ) {
 			
 			//Only if not yet in global array: applesauce_injected_urls!! 
 			_this.injectScriptTag(jqUrl); 
@@ -160,7 +167,8 @@ Applesauce.prototype.loadJQuery = function (callback, jqUrl) {
 							window.jQuery.noConflict());
 					}
 					
-					_this.jQuery(callback(_this.jQuery));
+					//_this.jQuery(callback(_this.jQuery));
+					callback();
 					
 				} else {
 					window.setTimeout(function () { checkReady(); }, 10);
@@ -179,7 +187,8 @@ Applesauce.prototype.loadJQuery = function (callback, jqUrl) {
 					window.jQuery);
 			}
 
-			_this.jQuery(callback(_this.jQuery));
+			//_this.jQuery(callback(_this.jQuery));
+			callback();
 		}
 	}
 
