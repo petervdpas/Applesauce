@@ -22,6 +22,21 @@
 			widget.jQuery.ajaxSetup({
 				cache: true
 			});
+			
+			/*
+			widget.getFunctionScript(
+				function() {
+					//do stuff resulting in true or false
+					return true;
+				},
+				"~/jquery-ui.1.10.4.custom.min.js",
+				function() {
+					//do stuff
+					callback();
+				}
+			);
+			*/
+			
 			widget.injectCss("simple.css");
 
 			widget.log("Rocket launcher!");

@@ -7,8 +7,7 @@ function Applesauce( widgetReference ) {
 	this.widget = null;
 	this.path = null;
 	
-	if ( this.jQuery === null && 
-			( window.jQuery !== undefined ) ) {
+	if ( this.jQuery === null ) {
 				
 		this.jQuery = this.setJqueryByVersion(
 			window.jQuery.fn.jquery,
@@ -49,7 +48,9 @@ Applesauce.prototype.setVersion = function (jqMin, jqMax) {
 
 Applesauce.prototype.injectScriptTag = function (url) {
 	
-	if ( !this.checkInjectedUrls(url) ) {
+	var _this = this;
+	
+	if ( !_this.checkInjectedUrls(url) ) {
 		var script = document.createElement("script");
 		script.type = 'text/javascript';
 		script.src = url;
@@ -77,29 +78,47 @@ Applesauce.prototype.injectCss = function (url) {
 
 Applesauce.prototype.resolveUrl = function (url) {
 	
-	var _this = this;
-	
+    var _this = this;
+
 	_this.init();
-	
-	return url && 
-		(url.length >= 2) && 
-		(url.substr(0, 1) == "~") ? url = _this.path + url.substr(1) : url;
+
+	if ( url && (url.length >= 2) && (url.substr(0, 1) == "~") ) {
+	   return _this.path + url.substr(1);
+	} else {
+	   return url;
+	}
 };
+
+Applesauce.prototype.UrlExists = function (url) {
+
+    var _this = this;
+
+    _this.jQuery.ajax({
+        url: url,
+        type: 'HEAD',
+        error: function () {
+            return false;
+        },
+        success: function () {
+            return true;
+        }
+    });
+}
 
 /* Might rename to checkInjectedSource */
 Applesauce.prototype.checkInjectedUrls = function (url) {
 	
-	if (typeof applesauce_injected_urls === 'undefined') {
-		document.applesauce_injected_urls = [];
+	if (typeof window.applesauce_injected_urls === 'undefined') {
+		window.applesauce_injected_urls = [];
 	}
 
-	for (var i = 0; i < document.applesauce_injected_urls.length; i++ ) {
-		if ( document.applesauce_injected_urls[i] === url ) {
+	for (var i = 0; i < window.applesauce_injected_urls.length; i++ ) {
+		if ( window.applesauce_injected_urls[i] === url ) {
 			return true;
 		} 
 	}
 	
-	document.applesauce_injected_urls.push(url);
+	window.applesauce_injected_urls.push(url);
 	
 	return false;
 };
@@ -110,7 +129,7 @@ Applesauce.prototype.setJqueryByVersion = function (version, jqObject) {
 	
 	if ( jqr === null ) {
 		
-		document.applesauce_jquery_objects.push({
+		window.applesauce_jquery_objects.push({
 			version: version,
 			jquery: jqObject
 		});
@@ -125,13 +144,13 @@ Applesauce.prototype.setJqueryByVersion = function (version, jqObject) {
 
 Applesauce.prototype.getJqueryByVersion = function (version) {
 	
-	if (typeof applesauce_jquery_objects === 'undefined') {
-		document.applesauce_jquery_objects = [];
+	if (typeof window.applesauce_jquery_objects === 'undefined') {
+		window.applesauce_jquery_objects = [];
 	}
 	
-	for (var i = 0; i < document.applesauce_jquery_objects.length; i++ ) {
-		if ( document.applesauce_jquery_objects[i].version === version ) {
-			return document.applesauce_jquery_objects[i].jquery;
+	for (var i = 0; i < window.applesauce_jquery_objects.length; i++ ) {
+		if ( window.applesauce_jquery_objects[i].version === version ) {
+			return window.applesauce_jquery_objects[i].jquery;
 		} 
 	}
 	
@@ -143,8 +162,8 @@ Applesauce.prototype.loadJQuery = function (callback, jqUrl) {
 	var _this = this;
 	
 	if (_this.jQuery && _this.jQuery.fn.jquery === _this.jqVersion) {
-		//_this.jQuery(callback(_this.jQuery));
-		callback();
+		_this.jQuery(callback);
+		//callback();
 	}
 	else {
 		
@@ -167,8 +186,8 @@ Applesauce.prototype.loadJQuery = function (callback, jqUrl) {
 							window.jQuery.noConflict());
 					}
 					
-					//_this.jQuery(callback(_this.jQuery));
-					callback();
+					_this.jQuery(callback);
+					//callback();
 					
 				} else {
 					window.setTimeout(function () { checkReady(); }, 10);
@@ -187,16 +206,39 @@ Applesauce.prototype.loadJQuery = function (callback, jqUrl) {
 					window.jQuery);
 			}
 
-			//_this.jQuery(callback(_this.jQuery));
-			callback();
+			_this.jQuery(callback);
+			//callback();
 		}
 	}
 
 };
 
 Applesauce.prototype.getScript = function (src, callback) {
-	var _this = this;
-	_this.jQuery.getScript(this.resolveUrl(src), callback);
+	
+    var _this = this;
+
+    if (!_this.checkInjectedUrls(src)) {
+        _this.jQuery.getScript(_this.resolveUrl(src), callback);
+    } else {
+        window.setTimeout(callback, 0);
+    }
+};
+
+Applesauce.prototype.getFunctionScript = function (func, src, callback) {
+
+    var _this = this;
+
+    if ( func() ) {
+        window.setTimeout(callback, 0);
+    } else {
+        if (!_this.checkInjectedUrls(src)) {
+            _this.jQuery.getScript(_this.resolveUrl(src), callback);
+        } else {
+            window.setTimeout(function () { 
+				_this.getFunctionScript(func, src, callback) 
+			}, 1000);
+        }
+    }
 };
 
 Applesauce.prototype.getWidgetData = function (name) {
