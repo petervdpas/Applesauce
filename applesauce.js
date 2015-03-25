@@ -17,8 +17,7 @@ function Applesauce( widgetReference ) {
 }
 
 Applesauce.prototype.log = function (msg) {
-	if ( console && 
-			(typeof console !== 'undefined') && 
+	if ( (typeof console !== 'undefined') && 
 			(typeof console.log !== 'undefined') ) {
 				
 		console.log("Applesauce: " + msg);
