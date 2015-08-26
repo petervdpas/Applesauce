@@ -14,7 +14,7 @@ function Applesauce( widgetReference ) {
 			window.jQuery
 		);
 	}
-}
+};
 
 Applesauce.prototype.log = function (msg) {
 	if ( (typeof console !== 'undefined') && 
@@ -22,7 +22,7 @@ Applesauce.prototype.log = function (msg) {
 				
 		console.log("Applesauce: " + msg);
 	}
-}
+};
 
 Applesauce.prototype.init = function () {
 	
@@ -43,7 +43,7 @@ Applesauce.prototype.setVersion = function (jqMin, jqMax) {
 	} else {
 		_this.jqVersion = jqMax;
 	}
-}
+};
 
 Applesauce.prototype.injectScriptTag = function (url) {
 	
@@ -75,6 +75,26 @@ Applesauce.prototype.injectCss = function (url) {
 	}
 };
 
+Applesauce.prototype.jarOpener = function (obj, idName, url) {
+	
+	var _this = this;
+	
+	var jar = document.createElement("iframe");
+	jar.setAttribute("src", url);
+	jar.setAttribute("scrolling", "no");
+	jar.setAttribute("frameborder", "none");
+	jar.setAttribute("position", "absolute");
+	jar.setAttribute("left", "0");
+	jar.setAttribute("top", "0");
+	jar.setAttribute("width", "100%");
+	jar.setAttribute("height", "0px");
+	jar.setAttribute("scrolling", "no");
+	
+	jar.setAttribute("id", idName);
+	
+	obj.replaceWith(jar);
+};
+
 Applesauce.prototype.resolveUrl = function (url) {
 	
     var _this = this;
@@ -102,7 +122,7 @@ Applesauce.prototype.UrlExists = function (url) {
             return true;
         }
     });
-}
+};
 
 /* Might rename to checkInjectedSource */
 Applesauce.prototype.checkInjectedUrls = function (url) {

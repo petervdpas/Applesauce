@@ -13,6 +13,8 @@
 			launch,
 			"https://ajax.googleapis.com/ajax/libs/jquery/" + widget.jqVersion + "/jquery.min.js");
 
+		widget.injectScriptTag("/iframeResizer.min.js");
+		
 		/*
 		widget.injectScriptTag("sammy/sammy-0.7.6.min.js");
 		widget.injectScriptTag("sammy/plugins/sammy.template-0.7.6.min.js");
@@ -92,6 +94,12 @@
 			return;
 		}
 
+		$jarHead = widget.getElement("jarselecttor");
+
+		if ($jarHead === null) {
+			return;
+		}
+		
 		// jQuery's .on() function is for jQuery >= 1.7
 		$onefield.on("click", "li", function() {
 			//widget.log( widget.jQuery(this).html() );
@@ -100,7 +108,15 @@
 			widget.log($$(this).html());
 			colorMe($$(this));
 		});
-
+		
+		//widget.injectScriptTag("/iframeResizer.min.js");
+		
+		widget.jarOpener($jarHead, "wokyboky", "//localhost:9393", "/iframeResizer.min.js");
+		
+		$('#wokyboky').iFrameResize({
+			checkOrigin: false
+		});	
+	
 	});
 
 	colorMe = function(elem) {

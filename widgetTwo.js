@@ -46,7 +46,6 @@
 			widget.log($$(this).html());
 			colorMe($$(this));
 		});
-
 	});
 
 	colorMe = function(elem) {
