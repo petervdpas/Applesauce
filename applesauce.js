@@ -9,6 +9,10 @@ function Applesauce( widgetReference, existing ) {
 	this.widget = null;
 	this.path = null;
 	
+	if ((window.jQuery || null) === null && this.jqExisting) {
+		this.log("Error - No jQuery found!");
+	}
+	
 	if ( this.jQuery === null ) {
 				
 		this.jQuery = this.setJqueryByVersion(
@@ -44,7 +48,7 @@ Applesauce.prototype.ver2num = function (version) {
 	var n = 0;
 	
 	for (var i=1; i < c; i++) {
-		n = n + ( parseInt(version_parts[i-1]) * Math.pow(10, i) );
+		n = n + (parseInt(version_parts[i-1]) * Math.pow(10, (i-1)*2));
 	}
 	
 	return n;
@@ -56,7 +60,7 @@ Applesauce.prototype.setVersion = function (jqMin, jqMax) {
 	
 	var initial_version = window.jQuery.fn.jquery;
 	
-	if ( _this.jqExisting && (_this.ver2num(initial_version) > 1600) ) {
+	if ( _this.jqExisting && (_this.ver2num(initial_version) >= _this.ver2num("1.6.1")) ) {
 		
 		_this.jqVersion = initial_version;
 		_this.jqVersion = initial_version;
