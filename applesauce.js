@@ -1,9 +1,11 @@
-function Applesauce( widgetReference ) {
+function Applesauce( widgetReference, existing ) {
 
 	this.jqVersion = null;
+	this.jqExisting = existing;
 	this.jQuery = null; // The widget's own jQuery reference
 	
 	this.widgetReference = widgetReference;
+	
 	this.widget = null;
 	this.path = null;
 	
@@ -34,14 +36,38 @@ Applesauce.prototype.init = function () {
 	}
 };
 
+Applesauce.prototype.ver2num = function (version) {
+	
+	var version_parts = version.split('.').reverse(); //major to minor
+	var c = (version_parts.length < 3) ? version_parts.length + 1 : 4;
+	
+	var n = 0;
+	
+	for (var i=1; i < c; i++) {
+		n = n + ( parseInt(version_parts[i-1]) * Math.pow(10, i) );
+	}
+	
+	return n;
+};
+
 Applesauce.prototype.setVersion = function (jqMin, jqMax) {
 	
 	var _this = this;
 	
-	if ( document.attachEvent && !document.addEventListener ) {
-		_this.jqVersion = jqMin;
+	var initial_version = window.jQuery.fn.jquery;
+	
+	if ( _this.jqExisting && (_this.ver2num(initial_version) > 1600) ) {
+		
+		_this.jqVersion = initial_version;
+		_this.jqVersion = initial_version;
+		
 	} else {
-		_this.jqVersion = jqMax;
+		
+		if ( document.attachEvent && !document.addEventListener ) {
+			_this.jqVersion = jqMin;
+		} else {
+			_this.jqVersion = jqMax;
+		}	
 	}
 };
 

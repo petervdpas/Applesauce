@@ -1,7 +1,7 @@
 (function() {
 
 	// self-calling anonymous function, voorkomt variabelenaam conflicten
-	var widget = new Applesauce("widgetOne");
+	var widget = new Applesauce("widgetOne", true);
 
 	widget.setVersion("1.11.1", "2.1.0");
 
@@ -13,7 +13,7 @@
 			launch,
 			"https://ajax.googleapis.com/ajax/libs/jquery/" + widget.jqVersion + "/jquery.min.js");
 
-		widget.injectScriptTag("/iframeResizer.min.js");
+		//widget.injectScriptTag("/iframeResizer.min.js");
 		
 		/*
 		widget.injectScriptTag("sammy/sammy-0.7.6.min.js");
@@ -111,11 +111,13 @@
 		
 		//widget.injectScriptTag("/iframeResizer.min.js");
 		
+		/*
 		widget.jarOpener($jarHead, "wokyboky", "//localhost:9393", "/iframeResizer.min.js");
 		
 		$('#wokyboky').iFrameResize({
 			checkOrigin: false
-		});	
+		});
+		*/	
 	
 	});
 
