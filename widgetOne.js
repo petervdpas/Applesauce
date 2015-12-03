@@ -1,7 +1,7 @@
 (function() {
 
 	// self-calling anonymous function, voorkomt variabelenaam conflicten
-	var widget = new Applesauce("widgetOne", true);
+	var widget = new Applesauce("widgetOne", false);
 
 	widget.setVersion("1.11.1", "2.1.0");
 

@@ -10,22 +10,37 @@ function Applesauce( widgetReference, existing ) {
 	this.path = null;
 	
 	if ((window.jQuery || null) === null && this.jqExisting) {
+		
 		this.log("Error - No jQuery found!");
+		
+	} else {
+
+		if ( this.jQuery === null ) {
+			this.jQuery = this.setJqueryByVersion(
+				window.jQuery.fn.jquery,
+				window.jQuery
+			);
+		}
+		
+		var widgetConf = document.getElementById(this.widgetReference);
+		if ( (widgetConf || null) != null ) {
+			existing = widgetConf.getAttribute('data-use-existing-jquery');
+			if ( (existing || null) != null ) {
+				this.jqExisting = JSON.parse(existing);
+			}
+		} 
 	}
-	
-	if ( this.jQuery === null ) {
-				
-		this.jQuery = this.setJqueryByVersion(
-			window.jQuery.fn.jquery,
-			window.jQuery
-		);
+
+	if (this.jqExisting) {
+		this.log("Using existing jQuery!");
+	} else {
+		this.log("Using injected jQuery!");
 	}
 };
 
 Applesauce.prototype.log = function (msg) {
 	if ( (typeof console !== 'undefined') && 
 			(typeof console.log !== 'undefined') ) {
-				
 		console.log("Applesauce: " + msg);
 	}
 };
@@ -37,6 +52,7 @@ Applesauce.prototype.init = function () {
 	if (_this.path === null && _this.configElementId !== null) {
 		_this.widget = _this.jQuery("#" + _this.widgetReference);
 		_this.path = _this.widget.data("src");
+		_this.jqExisting = _this.widget.data("existing");
 	}
 };
 
@@ -61,18 +77,16 @@ Applesauce.prototype.setVersion = function (jqMin, jqMax) {
 	var initial_version = window.jQuery.fn.jquery;
 	
 	if ( _this.jqExisting && (_this.ver2num(initial_version) >= _this.ver2num("1.6.1")) ) {
-		
 		_this.jqVersion = initial_version;
-		_this.jqVersion = initial_version;
-		
 	} else {
-		
 		if ( document.attachEvent && !document.addEventListener ) {
 			_this.jqVersion = jqMin;
 		} else {
 			_this.jqVersion = jqMax;
 		}	
 	}
+	
+	_this.log('loaded jQuery: ' + _this.jqVersion);
 };
 
 Applesauce.prototype.injectScriptTag = function (url) {
