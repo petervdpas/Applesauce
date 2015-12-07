@@ -24,9 +24,9 @@ function Applesauce( widgetReference, existing ) {
 		
 		var widgetConf = document.getElementById(this.widgetReference);
 		if ( (widgetConf || null) != null ) {
-			existing = widgetConf.getAttribute('data-use-existing-jquery');
-			if ( (existing || null) != null ) {
-				this.jqExisting = JSON.parse(existing);
+			existing = widgetConf.getAttribute('data-use-existing-jquery') || null;
+			if ( existing != null ) {
+				this.jqExisting = (existing.toLowerCase() === 'true') ? true : false;
 			}
 		} 
 	}
