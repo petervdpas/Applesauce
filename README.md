@@ -2,7 +2,7 @@
 
 ### Some asynchronous JavaScript to sweeten up your chicken...
 
-<img src="http://makernode.net/uploads/543d3362210757.32074860/applesauce.png" width="200px" />
+<img src="https://github.com/petervdpas/Applesauce/blob/master/applesauce.png" width="200px" />
 
 Applesauce just makes everything taste a little better (at least little children seem to think so). And that is just what the Applesauce JavaScript is doing. After everything is loaded into the browser, this script is able to asynchronously load a (newer) version of jQuery onto your page and use this with your own widgets. After that you are able to load (let's say) jQuery-UI that might require a later jQuery version than the one that is originally loaded. So Applesauce sweetens up your page like applesauce does with chicken...
 
